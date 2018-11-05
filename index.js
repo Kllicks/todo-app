@@ -1,6 +1,9 @@
 const Todo = require('./models/Todo');
 const User = require('./models/User');
 
+
+//FOR TESTING DATABASE PURPOSES:
+//=============================
 // CREATE
 // example of adding a row
 // --------------------------
@@ -8,6 +11,10 @@ const User = require('./models/User');
 //     .catch(err => {
 //         console.log(err);
 //     })
+//     .then(result => {
+//         console.log(result);
+//     })
+// User.add('jeff')
 //     .then(result => {
 //         console.log(result);
 //     })
@@ -20,11 +27,11 @@ const User = require('./models/User');
 //         console.log(results);
 //         console.log('those were the todos');
 //     })
-User.getAll()
-    .then(results => {
-        console.log(results);
-        console.log('those were the users');
-    })
+// User.getAll()
+//     .then(results => {
+//         console.log(results);
+//         console.log('those were the users');
+//     })
 
 // example of grabbing one row
 
@@ -36,11 +43,19 @@ User.getAll()
 //     .then(result => {
 //         console.log(result);
 //     })
+// User.getById(2)
+//     .then(result => {
+//         console.log(result);
+//     })
 
 // UPDATE
 // example of updating a row
 // -----------------------------
 // Todo.updateName(2, 'buy new hyperdrive')
+//     .then(result => {
+//         console.log(result);
+//     })
+// User.updateName(6, 'JEFF')
 //     .then(result => {
 //         console.log(result);
 //     })
@@ -54,6 +69,10 @@ User.getAll()
 // example of deleting a row
 // --------------------------------------
 // Todo.deleteById(10)
+//     .then(result => {
+//         console.log(result.rowCount);
+//     })
+// User.deleteById(6)
 //     .then(result => {
 //         console.log(result.rowCount);
 //     })
