@@ -62,8 +62,6 @@ function markPending(id) {
     //                     where id=$1`, [id, false]);
 }
 
-
-
 // DELETE
 // example of deleting a row
 function deleteById(id){
