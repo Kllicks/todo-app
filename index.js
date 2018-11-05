@@ -56,6 +56,17 @@ function getById(id){
 //     })
 
 // UPDATE
+function updateName(id, name) {
+    return db.result(`update todos
+                        set name=$2
+                        where id=$1`, [id, name]);
+}
+
+updateName(2, 'buy new hyperdrive')
+    .then(result => {
+        console.log(result);
+    })
+
 function updateCompleted(id, didComplete) {
     return db.result(`update todos 
 	                    set completed=$2 
@@ -80,9 +91,6 @@ function markPending(id) {
 //         console.log(result);
 //     })
 
-function updateName(id, name) {
-    return db
-}
 
 
 // DELETE
