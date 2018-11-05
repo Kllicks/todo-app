@@ -65,8 +65,7 @@ function markPending(id) {
 // DELETE
 // example of deleting a row
 function deleteById(id){
-    return db.result(`delete from todos where id = $1`, [id])
-        
+    return db.result(`delete from todos where id = $1`, [id]);
 }
 
 

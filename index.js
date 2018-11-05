@@ -1,4 +1,5 @@
 const Todo = require('./models/Todo');
+const User = require('./models/User');
 
 // CREATE
 // example of adding a row
@@ -19,6 +20,11 @@ const Todo = require('./models/Todo');
 //         console.log(results);
 //         console.log('those were the todos');
 //     })
+User.getAll()
+    .then(results => {
+        console.log(results);
+        console.log('those were the users');
+    })
 
 // example of grabbing one row
 
