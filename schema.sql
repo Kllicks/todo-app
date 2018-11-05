@@ -9,3 +9,10 @@ create table todos(
     completed boolean
 );
 
+-- USERs
+-- name
+
+create table users (
+    id serial primary key,
+    name text
+);

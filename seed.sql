@@ -6,3 +6,12 @@ values
     ('return to dagobah', false),
     ('play CAH with yoda', false),
     ('return bowies phone calls', false);
+
+insert into users
+    (name)
+values
+    ('aylin'),
+    ('beth'),
+    ('chris'),
+    ('bruce'),
+    ('alf');
