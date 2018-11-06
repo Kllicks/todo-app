@@ -61,7 +61,13 @@ class User {
     // UPDATE
 
     // DELETE
+    delete() {
+        return db.result(`delete from users where id = $1`, [this.id]);
+    }
 
+    static deleteById(id){
+        return db.result(`delete from users where id = $1`, [id]);
+    }
     // greet(otherUser) {
     //     console.log(`hello ${otherUser}, I am ${this.name}`);
     // }
@@ -115,9 +121,9 @@ function updateName(id, name) {
 
 // DELETE
 // ------
-function deleteById(id){
-    return db.result(`delete from users where id = $1`, [id]);
-}
+// function deleteById(id){
+//     return db.result(`delete from users where id = $1`, [id]);
+// }
 
 // Export
 // ------
