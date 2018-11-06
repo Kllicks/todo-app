@@ -1,14 +1,63 @@
 const db = require('./db');
 
+// declare a class named "User"
+class User {
+    // what properties should
+    // a user start off with?
+    // `constructor` is a method
+    // that is automatically
+    // called when you create a user
+    constructor(id, name) {
+        // define properties that
+        // are also the names
+        // of the database columns
+        this.id = id;
+        this.name = name;
+    }
+    
+    // CREATE
+
+    static add(name) {
+        return db.one(`insert into users (name)
+            values
+                ($1)
+            returning id
+        `, [name])
+        .then(data => {
+            const u = new User(data.id, name);
+            return u;
+        })
+    }
+
+    // RETRIEVE
+
+    getById(){
+        return db.one(`select * from users where id = $1`, [this.id]);
+    }
+    
+    getTodos() {
+        return db.any(`select * from todos where user_id = $1`, [this.id]);
+    }
+
+    // UPDATE
+
+    // DELETE
+
+    // greet(otherUser) {
+    //     console.log(`hello ${otherUser}, I am ${this.name}`);
+    // }
+}
+
+
 // CREATE
 // -------
-function add(name) {
-    return db.one(`insert into users (name)
-        values
-            ($1)
-        returning id
-    `, [name]) 
-}
+// function add(name) {
+//     return db.one(`insert into users (name)
+//         values
+//             ($1)
+//         returning id
+//     `, [name]) 
+// }
 
 // RETRIEVE
 // --------
@@ -29,13 +78,13 @@ function getAll() {
 
 
 
-function getById(id){
-    return db.one(`select * from users where id = $1`, [id]);
-}
+// function getById(id){
+//     return db.one(`select * from users where id = $1`, [id]);
+// }
 
-function getTodosForUser(id) {
-    return db.any(`select * from todos where user_id = $1`, [id]);
-}
+// function getTodosForUser(id) {
+//     return db.any(`select * from todos where user_id = $1`, [id]);
+// }
 
 // UPDATE
 // ------
@@ -53,11 +102,14 @@ function deleteById(id){
 
 // Export
 // ------
-module.exports = {
-    add,
-    getAll,
-    getById, 
-    updateName,
-    getTodosForUser,
-    deleteById,
-};
+
+module.exports = User;
+// module.exports = {
+//     add,
+//     getAll,
+//     getById, 
+//     updateName,
+//     getTodosForUser,
+//     deleteById,
+//     User
+// };
