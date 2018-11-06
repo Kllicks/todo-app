@@ -18,25 +18,44 @@ class User {
     // CREATE
 
     static add(name) {
-        return db.one(`insert into users (name)
+        return db.one(`
+            insert into users 
+                (name)
             values
                 ($1)
             returning id
-        `, [name])
-        .then(data => {
-            const u = new User(data.id, name);
-            return u;
-        })
+            `, [name])
+            .then(data => {
+                const u = new User(data.id, name);
+                return u;
+            })
     }
 
     // RETRIEVE
 
-    getById(){
-        return db.one(`select * from users where id = $1`, [this.id]);
+    static getById(id){
+        return db.one(`select * from users where id = $1`, [id])
+            .then(result => {
+                const u = new User(result.id, result.name);
+                return u;
+            })
     }
     
     getTodos() {
-        return db.any(`select * from todos where user_id = $1`, [this.id]);
+        return db.any(`select * from todos where user_id = $1`, [this.id])
+    }
+
+    static getAll() {
+        return db.any(`select * from users
+                        `).then(userArray => {
+                            // transform array of objects
+                            // into array of User instances
+                            let instanceArray = userArray.map(userObj => {
+                                let u = new User(userObj.id, userObj.name);
+                                return u;
+                            });
+                            return instanceArray;
+                        })
     }
 
     // UPDATE
@@ -64,17 +83,17 @@ class User {
 // function getAll() {
 //     return db.any('select * from users')
 // }
-function getAll() {
-    return db.any(`select
-                        users.id,
-                        users.name,
-                        t.name as todo,
-                        t.completed as completed
-                    from
-                        users
-                        left join todos t
-                        on users.id = t.user_id`);
-}
+// function getAll() {
+//     return db.any(`select
+//                         users.id,
+//                         users.name,
+//                         t.name as todo,
+//                         t.completed as completed
+//                     from
+//                         users
+//                         left join todos t
+//                         on users.id = t.user_id`);
+// }
 
 
 
