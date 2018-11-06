@@ -1,5 +1,24 @@
+require('dotenv').config();
+
 const Todo = require('./models/Todo');
 const User = require('./models/User');
+
+// User.getTodosForUser(3)
+//     .then(result => {
+//         console.log(result);
+//     })
+
+// Todo.assignToUser(2,2)
+//     .then(() => {
+//         User.getTodosForUser(2)
+//             .then(result => {
+//                 console.log(result);
+//         })
+//     })
+User.getAll()
+    .then(result => {
+        console.log(result);
+    })
 
 
 //FOR TESTING DATABASE PURPOSES:

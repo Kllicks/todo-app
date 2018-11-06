@@ -1,12 +1,4 @@
-// ===================
-// Database Connection
-// ===================
-const pgp = require('pg-promise')();
-const db = pgp({
-    host: 'localhost',
-    port: 5432,
-    database: 'node-todo-app-db'
-});
+const db = require('./db');
 
 // CREATE
 // -------
@@ -20,12 +12,29 @@ function add(name) {
 
 // RETRIEVE
 // --------
+// function getAll() {
+//     return db.any('select * from users')
+// }
 function getAll() {
-    return db.any('select * from users')
+    return db.any(`select
+                        users.id,
+                        users.name,
+                        t.name as todo,
+                        t.completed as completed
+                    from
+                        users
+                        left join todos t
+                        on users.id = t.user_id`);
 }
+
+
 
 function getById(id){
     return db.one(`select * from users where id = $1`, [id]);
+}
+
+function getTodosForUser(id) {
+    return db.any(`select * from todos where user_id = $1`, [id]);
 }
 
 // UPDATE
@@ -49,5 +58,6 @@ module.exports = {
     getAll,
     getById, 
     updateName,
+    getTodosForUser,
     deleteById,
 };
