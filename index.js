@@ -3,6 +3,11 @@ require('dotenv').config();
 const Todo = require('./models/Todo');
 const User = require('./models/User');
 
+User.searchByName('ylin')
+    .then(users => {
+        console.log(users);
+    });
+
 // User.getById(7)
 //     .then(u => {
 //         u.delete();
