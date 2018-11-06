@@ -3,10 +3,10 @@ require('dotenv').config();
 const Todo = require('./models/Todo');
 const User = require('./models/User');
 
-User.updateName(1, 'bobby')
-    .then(users => {
-        console.log(users);
-    })
+// User.updateName('bobby')
+//     .then(users => {
+//         console.log(users);
+//     })
 
 // User.searchByName('ylin')
 //     .then(users => {
