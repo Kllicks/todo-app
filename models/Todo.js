@@ -8,61 +8,70 @@ class Todo {
     }
     
     // CREATE
-    add(name, completed) {
+    static add(name, completed) {
         return db.one(`insert into todos (name, completed)
             values
                 ($1, $2)
             returning id
-        `, [this.name, this.completed]) 
+        `, [name, completed]) 
     }
 
     // RETRIEVE
-    getAll() {
-        return db.any('select * from todos')
+    static getAll() {
+        return db.any('select * from todos').then(todoArray => {
+            let instanceArray = todoArray.map(todoObj => {
+                let u = new Todo(todoObj.id, todoObj.name, todoObj.completed);
+                return u;
+            });
+            return instanceArray;
+        })
     }
 
     static getById(id){
         return db.one(`select * from todos where id = $1`, [id])
             .then(result => {
-                const u = new Todo(result.id, result.name)
+                const u = new Todo(result.id, result.name, result.completed)
                 return u;
             })
     }
 
     // UPDATE
-    assignToUser(id, userId) {
+    assignToUser(userId) {
         return db.result(`
             update todos
                 set user_id = $2
             where id = $1
-            `, [this.id, User.id]);
+            `, [this.id, userId]);
     }
 
-    updateName(id, name) {
+    updateName(name) {
         return db.result(`update todos
                             set name=$2
                             where id=$1`, [this.id, name]);
     }
 
-    updateCompleted(id, didComplete) {
+    updateCompleted(didComplete) {
         return db.result(`update todos 
                             set completed=$2 
                             where id=$1`, [this.id, didComplete]);
     }
     
-    static markCompleted(id) {
-        return updateCompleted(id, true);
-    }
+    // markCompleted() {
+    //     return updateCompleted(true);
+    // }
 
-    static markPending(id) {
-        return updateCompleted(id, false);
-    }
-
-    deleteById(id){
-        return db.result(`delete from todos where id = $1`, [id]);
-    }
+    // markPending() {
+    //     return updateCompleted(false);
+    // }
 
     // DELETE
+    delete() {
+        return db.result(`delete from users where id = $1`, [this.id]);
+    }
+    
+    static deleteById(id){
+        return db.result(`delete from todos where id = $1`, [id]);
+    }
 
     
 }

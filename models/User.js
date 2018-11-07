@@ -67,11 +67,11 @@ class User {
 
     // UPDATE
 
-    static updateName(id, name) {
+    updateName(name) {
         return db.result(`update users
                             set name=$2
                             where id=$1
-                            `, [id, name]);
+                            `, [this.id, name]);
     }
 
     // DELETE

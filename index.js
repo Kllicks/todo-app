@@ -3,6 +3,8 @@ require('dotenv').config();
 const Todo = require('./models/Todo');
 const User = require('./models/User');
 
+
+
 // User.updateName('bobby')
 //     .then(users => {
 //         console.log(users);
@@ -107,9 +109,9 @@ const User = require('./models/User');
 // example of adding a row
 // --------------------------
 // Todo.add('walk chewbacca', false)
-//     .catch(err => {
-//         console.log(err);
-//     })
+//     // .catch(err => {
+//     //     console.log(err);
+//     // })
 //     .then(result => {
 //         console.log(result);
 //     })
@@ -150,6 +152,31 @@ const User = require('./models/User');
 // UPDATE
 // example of updating a row
 // -----------------------------
+
+Todo.getById(2)
+    .then(todo => {
+        todo.assignToUser(4);
+    })
+    .then(result => {
+        console.log(result);
+    })
+
+// Todo.getById(2)
+//     .then(todo => {
+//         todo.updateCompleted(true);
+//     })
+//     .then(result => {
+//         console.log(result);
+//     })
+
+// Todo.getById(2)
+//     .then(todo => {
+//         todo.updateName('buy new hyperdrive');
+//     })
+//     .then(result => {
+//         console.log(result);
+//     })
+
 // Todo.updateName(2, 'buy new hyperdrive')
 //     .then(result => {
 //         console.log(result);
@@ -175,4 +202,6 @@ const User = require('./models/User');
 //     .then(result => {
 //         console.log(result.rowCount);
 //     })
+
+// Todo.deleteById(2);
 
