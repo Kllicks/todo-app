@@ -153,22 +153,27 @@ const User = require('./models/User');
 // example of updating a row
 // -----------------------------
 
-Todo.getById(2)
-    .then(todo => {
-        todo.assignToUser(4);
-    })
-    .then(result => {
-        console.log(result);
-    })
+// Todo.markCompleted(2)
+//     .then(result => {
+//         console.log(result);
+//     })
 
 // Todo.getById(2)
 //     .then(todo => {
-//         todo.updateCompleted(true);
+//         todo.markCompleted(true);
+    
 //     })
 //     .then(result => {
 //         console.log(result);
 //     })
 
+// Todo.getById(2)
+//     .then(todo => {
+//         todo.markPending()
+//             .then(result => {
+//                 console.log(result);
+//             })
+//     })
 // Todo.getById(2)
 //     .then(todo => {
 //         todo.updateName('buy new hyperdrive');

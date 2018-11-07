@@ -56,13 +56,13 @@ class Todo {
                             where id=$1`, [this.id, didComplete]);
     }
     
-    // markCompleted() {
-    //     return updateCompleted(true);
-    // }
+    markCompleted() {
+        return this.updateCompleted(true);
+    }
 
-    // markPending() {
-    //     return updateCompleted(false);
-    // }
+    markPending() {
+        return this.updateCompleted(false);
+    }
 
     // DELETE
     delete() {
