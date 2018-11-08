@@ -2,6 +2,13 @@ require('dotenv').config();
 
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser')
+
+// Configure body-parser to read data sent by HTML form tags
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// Configure body-parser to read JSON bodies
+app.use(bodyParser.json());
 
 const Todo = require('./models/Todo');
 const User = require('./models/User');
@@ -59,12 +66,61 @@ app.get(`/users/register`, (req, res) => {
     res.send(`you are on the registration page`);
 })
 
+app.get(`/todos/users/:id([0-9]+)/pending`, (req, res) => {
+    User.getById(req.params.id)
+        .then(usertodo => {
+            usertodo.getTodos()
+            .then(result => {
+                res.send(result);
+            })
+        })
+});
+
+// Listen for POST requests
+app.post(`/users`, (req, res) => {
+    // console.log(req.body)
+    // res.send(`ok`);
+    const newUsername = req.body.name;
+    User.add(newUsername)
+        .then(theUser => {
+            res.send(theUser);
+        })
+});
+
+app.post(`/users/:id([0-9]+)`, (req,res) => {
+    const id = req.params.id;
+    const newName = req.body.name;
+    console.log(newName);
+    console.log(id);
+    // res.send(`ok`);
+
+    // Get the user by thier id
+    User.getById(id)
+        .then(theUser => {
+            // call that user's updateName method
+            theUser.updateName(newName)
+                .then(result => {
+                    if (result.rowCount === 1){
+                        res.send(`success`);
+                    } else {
+                        res.send(`error`);
+                    }
+                })
+        })
+}); 
+
 
 app.listen(3000, () => {
     console.log(`You're express app is ready`);
 });
 
-
+// Todo.getById(1)
+//     .then(usertodo => {
+//         usertodo.assignToUser(1)
+//         .then(result => {
+//             console.log(result);
+//         })
+//     })
 
 // User.updateName('bobby')
 //     .then(users => {
