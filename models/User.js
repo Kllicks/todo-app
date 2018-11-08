@@ -67,11 +67,12 @@ class User {
 
     // UPDATE
 
-    updateName(name) {
+    updateName(newName) {
+        this.name = newName;
         return db.result(`update users
                             set name=$2
                             where id=$1
-                            `, [this.id, name]);
+                            `, [this.id, newName]);
     }
 
     // DELETE
