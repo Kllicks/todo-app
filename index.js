@@ -1,7 +1,27 @@
 require('dotenv').config();
 
+const express = require('express');
+const app = express();
+
 const Todo = require('./models/Todo');
 const User = require('./models/User');
+
+// Listen for a GET request
+app.get('/', (req, res) => {
+    User.getAll()
+        .then(allUsers => {
+            
+            
+            // can only send route event once
+            res.send(allUsers);
+            // res.status(200).json(allUsers);
+        })
+    // res.send(`hello express`);
+});
+
+app.listen(3000, () => {
+    console.log(`You're express app is ready`);
+});
 
 
 

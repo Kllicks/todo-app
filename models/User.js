@@ -71,7 +71,7 @@ class User {
         this.name = newName;
         return db.result(`update users
                             set name=$2
-                            where id=$1
+                            where id=$
                             `, [this.id, newName]);
     }
 
@@ -81,7 +81,19 @@ class User {
     }
 
     static deleteById(id){
-        return db.result(`delete from users where id = $1`, [id]);
+        return db.result(`delete from users where id = $1`, [id])
+        // .then(result => {
+        //     if (result.rowCount === 0) {
+        //         return {
+        //             message: 'no row exists'
+        //         }
+        //     }
+        // })
+        // .catch(err => {
+        //     return {
+        //         message: 'error'
+        //     }
+        // })
     }
     // greet(otherUser) {
     //     console.log(`hello ${otherUser}, I am ${this.name}`);
