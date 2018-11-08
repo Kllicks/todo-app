@@ -6,8 +6,13 @@ const app = express();
 const Todo = require('./models/Todo');
 const User = require('./models/User');
 
+// CREATE - Post 
+// RETRIEVE - Get
+// UPDATE - Put
+// DELETE - Delete
+
 // Listen for a GET request
-app.get('/', (req, res) => {
+app.get('/users', (req, res) => {
     User.getAll()
         .then(allUsers => {
             
@@ -18,6 +23,42 @@ app.get('/', (req, res) => {
         })
     // res.send(`hello express`);
 });
+
+app.get(`/todos`, (req, res) => {
+    Todo.getAll()
+        .then(allTodos => {
+            res.send(allTodos);
+        })
+});
+
+// Match the string "/users/" followed by one or more digits
+// REGular EXpressions - REGEX
+app.get('/users/:id([0-9]+)', (req, res) => {
+// app.get('/users/:id(\\d+)', (req, res) => {
+    console.log(req.params.id);
+    User.getById(req.params.id)
+        .then(theUser => {
+            res.send(theUser);
+        })
+        // catch in this layer rather than within model layer
+        .catch(err => {
+            res.send({
+                message: `no response`
+            })
+        })
+});
+
+app.get('/todos/:id([0-9]+)', (req,res) => {
+    Todo.getById(req.params.id)
+        .then(theTodo => {
+            res.send(theTodo);
+        })
+});
+
+app.get(`/users/register`, (req, res) => {
+    res.send(`you are on the registration page`);
+})
+
 
 app.listen(3000, () => {
     console.log(`You're express app is ready`);
