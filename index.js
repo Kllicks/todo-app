@@ -17,6 +17,7 @@ const User = require('./models/User');
 
 const page = require(`./views/page`);
 const userList = require(`./views/userList`);
+const todoList = require(`./views/todoList`);
 
 app.get(`/`, (req, res) => {
     const thePage = page(`hello`);
@@ -65,6 +66,18 @@ app.get('/users/:id([0-9]+)', (req, res) => {
             res.send({
                 message: `no response`
             })
+        })
+});
+
+app.get('/users/:id([0-9]+)/todos', (req, res) => {
+    User.getById(req.params.id)
+        .then(theUser => {
+            theUser.getTodos()
+                .then(allTodos => {
+                    const todosUL = todoList(allTodos);
+                    const thePage = page(todosUL);
+                    res.send(thePage);
+                })
         })
 });
 
