@@ -13,6 +13,13 @@ app.use(bodyParser.json());
 const Todo = require('./models/Todo');
 const User = require('./models/User');
 
+const page = require(`./views/page`);
+const userList = require(`./views/userList`);
+
+app.get(`/`, (req, res) => {
+    const thePage = page(`hello`);
+    res.send(thePage);
+});
 // CREATE - Post 
 // RETRIEVE - Get
 // UPDATE - Put
@@ -22,11 +29,14 @@ const User = require('./models/User');
 app.get('/users', (req, res) => {
     User.getAll()
         .then(allUsers => {
-            
-            
             // can only send route event once
-            res.send(allUsers);
+            // res.send(allUsers);
             // res.status(200).json(allUsers);
+            const usersUL = userList(allUsers);
+            const thePage = page(usersUL);
+            res.send(thePage);
+            // or
+            // res.send(page(userList(allUsers)));
         })
     // res.send(`hello express`);
 });
@@ -91,7 +101,7 @@ app.post(`/users`, (req, res) => {
 // Updating an existing user
 // Using Post because HTML Forms can only send GET or POST.
 // HTML Form cannot send a PUT or DELETE
-app.post(`/users/:id([0-9]+)`, (req,res) => {
+app.post(`/users/id/:id([0-9]+)`, (req,res) => {
     const id = req.params.id;
     const newName = req.body.name;
     console.log(newName);
@@ -100,6 +110,28 @@ app.post(`/users/:id([0-9]+)`, (req,res) => {
 
     // Get the user by thier id
     User.getById(id)
+        .then(theUser => {
+            // call that user's updateName method
+            theUser.updateName(newName)
+                .then(result => {
+                    if (result.rowCount === 1){
+                        res.send(`success`);
+                    } else {
+                        res.send(`error`);
+                    }
+                })
+        })
+}); 
+
+app.post(`/users/name/:name([A-Z0-9]+)`, (req,res) => {
+    const id = req.params.name;
+    const newName = req.body.name;
+    console.log(newName);
+    console.log(id);
+    // res.send(`ok`);
+
+    // Get the user by thier id
+    User.searchByName(name)
         .then(theUser => {
             // call that user's updateName method
             theUser.updateName(newName)
