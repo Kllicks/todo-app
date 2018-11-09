@@ -71,7 +71,7 @@ class User {
         this.name = newName;
         return db.result(`update users
                             set name=$2
-                            where id=$
+                            where id=$1
                             `, [this.id, newName]);
     }
 
