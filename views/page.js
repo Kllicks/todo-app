@@ -1,3 +1,5 @@
+const {header, footer} = require(`./helper`);
+
 
 function page(content) {
     return `
@@ -13,7 +15,11 @@ function page(content) {
 
     </head>
     <body>
-        ${content}
+        ${header()}
+        <div class="main">
+            ${content}
+        </div>
+        ${footer()}
     </body>
     </html>
     `;
