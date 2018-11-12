@@ -8,10 +8,10 @@ values
     ('return bowies phone calls', false);
 
 insert into users
-    (name)
+    (name, username, password)
 values
-    ('aylin'),
-    ('beth'),
-    ('chris'),
-    ('bruce'),
-    ('alf');
+    ('aylin', 'aylin',),
+    ('beth', 'beth', ),
+    ('chris', 'chris', ),
+    ('bruce', 'bruce', ),
+    ('alf', 'alf', );

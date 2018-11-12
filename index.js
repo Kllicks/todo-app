@@ -72,13 +72,13 @@ app.get('/users/:id([0-9]+)/edit', (req, res) => {
 
 app.get('/users/:id([0-9]+)', (req, res) => {
     User.getById(req.params.id)
+        .catch(err => {
+            res.send({
+                message: `no soup for you`
+            });
+        })
         .then(theUser => {
-            theUser.getTodos()
-                .then(allTodos => {
-                    const todosUL = todoList(allTodos);
-                    const thePage = page(todosUL);
-                    res.send(thePage);
-                })
+            res.send(theUser);
         })
         
 });
