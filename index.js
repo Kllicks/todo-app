@@ -18,6 +18,7 @@ const User = require('./models/User');
 const page = require(`./views/page`);
 const userList = require(`./views/userList`);
 const todoList = require(`./views/todoList`);
+const userForm = require(`./views/userForm`);
 
 app.get(`/`, (req, res) => {
     const thePage = page(`hello`);
@@ -59,7 +60,7 @@ app.get('/users/:id([0-9]+)', (req, res) => {
     console.log(req.params.id);
     User.getById(req.params.id)
         .then(theUser => {
-            res.send(theUser);
+            res.send(page(userForm(theUser)));
         })
         // catch in this layer rather than within model layer
         .catch(err => {
