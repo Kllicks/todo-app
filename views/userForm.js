@@ -1,6 +1,7 @@
 function userForm(aUser) {
     return `
-        <form action="" method="POST">
+        <a href="/users">Return to user list</a>
+        <form action="/users/${aUser.id}/edit" method="POST">
             <input type="text" name="name" value="${aUser.name}">
             <br>
             <input type="submit">

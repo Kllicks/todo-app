@@ -118,7 +118,7 @@ app.post(`/users`, (req, res) => {
 // Updating an existing user
 // Using Post because HTML Forms can only send GET or POST.
 // HTML Form cannot send a PUT or DELETE
-app.post(`/users/id/:id([0-9]+)`, (req,res) => {
+app.post(`/users/:id([0-9]+)/edit`, (req,res) => {
     const id = req.params.id;
     const newName = req.body.name;
     console.log(newName);
@@ -132,7 +132,8 @@ app.post(`/users/id/:id([0-9]+)`, (req,res) => {
             theUser.updateName(newName)
                 .then(result => {
                     if (result.rowCount === 1){
-                        res.send(`success`);
+                        // res.redirect(`/users/${id}/edit`);
+                        res.redirect(`/users/`);
                     } else {
                         res.send(`error`);
                     }

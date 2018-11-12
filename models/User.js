@@ -53,7 +53,7 @@ class User {
     }
 
     static getAll() {
-        return db.any(`select * from users
+        return db.any(`select * from users order by id
                         `).then(userArray => {
                             // transform array of objects
                             // into array of User instances
