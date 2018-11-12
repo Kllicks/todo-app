@@ -8,10 +8,10 @@ values
     ('return bowies phone calls', false);
 
 insert into users
-    (name, username, password)
+    (name, username, pwhash)
 values
-    ('aylin', 'aylin',),
-    ('beth', 'beth', ),
-    ('chris', 'chris', ),
-    ('bruce', 'bruce', ),
-    ('alf', 'alf', );
+    ('aylin', 'aylin', '$2b$10$QUJ346ylCYC7rIS2cbqEq.l4o.HCL6r.pZokcF6Tivha/UTXDi.JK'),
+    ('beth', 'beth', '$2b$10$QUJ346ylCYC7rIS2cbqEq.l4o.HCL6r.pZokcF6Tivha/UTXDi.JK'),
+    ('chris', 'chris', '$2b$10$QUJ346ylCYC7rIS2cbqEq.l4o.HCL6r.pZokcF6Tivha/UTXDi.JK'),
+    ('bruce', 'bruce', '$2b$10$QUJ346ylCYC7rIS2cbqEq.l4o.HCL6r.pZokcF6Tivha/UTXDi.JK'),
+    ('alf', 'alf', '$2b$10$QUJ346ylCYC7rIS2cbqEq.l4o.HCL6r.pZokcF6Tivha/UTXDi.JK');
