@@ -70,6 +70,20 @@ app.get('/users/:id([0-9]+)/edit', (req, res) => {
         })
 });
 
+app.get('/users/:id([0-9]+)', (req, res) => {
+    User.getById(req.params.id)
+        .then(theUser => {
+            theUser.getTodos()
+                .then(allTodos => {
+                    const todosUL = todoList(allTodos);
+                    const thePage = page(todosUL);
+                    res.send(thePage);
+                })
+        })
+        
+});
+
+// Retrieve all todos for a user
 app.get('/users/:id([0-9]+)/todos', (req, res) => {
     User.getById(req.params.id)
         .then(theUser => {
@@ -89,9 +103,9 @@ app.get('/todos/:id([0-9]+)', (req,res) => {
         })
 });
 
-app.get(`/users/register`, (req, res) => {
-    res.send(`you are on the registration page`);
-})
+// app.get(`/users/register`, (req, res) => {
+//     res.send(`you are on the registration page`);
+// })
 
 app.get(`/todos/users/:id([0-9]+)/pending`, (req, res) => {
     User.getById(req.params.id)
