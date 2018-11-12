@@ -55,7 +55,7 @@ app.get(`/todos`, (req, res) => {
 
 // Match the string "/users/" followed by one or more digits
 // REGular EXpressions - REGEX
-app.get('/users/:id([0-9]+)', (req, res) => {
+app.get('/users/:id([0-9]+)/edit', (req, res) => {
 // app.get('/users/:id(\\d+)', (req, res) => {
     console.log(req.params.id);
     User.getById(req.params.id)
