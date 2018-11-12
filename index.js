@@ -19,6 +19,8 @@ const page = require(`./views/page`);
 const userList = require(`./views/userList`);
 const todoList = require(`./views/todoList`);
 const userForm = require(`./views/userForm`);
+const registerForm = require(`./views/registerForm`);
+const loginForm = require(`./views/loginForm`);
 
 // User.add('jimmy hendrix', 'jim', 'guitar')
 //     .then(console.log)
@@ -71,6 +73,48 @@ app.get('/users/:id([0-9]+)/edit', (req, res) => {
                 message: `no response`
             })
         })
+});
+
+// User registration
+// ------------------
+app.get('/register' , (req, res) => {
+    // signup form
+    res.send(page(registerForm()));
+
+});
+
+app.post('/register' , (req, res) => {
+    // process the signup form
+        // Process the signup form
+    // 1. Grab the values out of req.body
+    const newName = req.body.name;
+    const newUsername = req.body.username;
+    const newPassword = req.body.password;
+
+    console.log(newName);
+    console.log(newUsername);
+    console.log(newPassword);
+    // 2. Call User.add
+    User.add(newName, newUsername, newPassword)
+        .then(newUser => {
+            // 3. If that works, redirect to the welcome page
+            res.redirect('/welcome');
+        });
+
+});
+app.get('/welcome' , (req, res) => {
+    // send them the welcom page
+    res.send(page('<h1>Hey punk</h1>'));
+});
+
+// User login
+// ----------
+app.get('/login' , (req, res) => {
+    res.send(page(loginForm()));
+});
+
+app.post('/login', (req, res) => {
+    
 });
 
 app.get('/users/:id([0-9]+)', (req, res) => {
