@@ -38,6 +38,34 @@ const userForm = require(`./views/userForm`);
 const registerForm = require(`./views/registerForm`);
 const loginForm = require(`./views/loginForm`);
 
+function protectRoute(req, res, next) {
+    let isLoggedIn = req.session.user ? true : false;
+    if (isLoggedIn) {
+        next();
+    } else {
+        res.redirect(`/login`);
+    }
+}
+
+// middleware
+app.use((req, res, next) => {
+
+    // let isLoggedIn = false;
+    // if (req.session.user) {
+    //     isLoggedIn = true;
+    // }
+    let isLoggedIn = req.session.user ? true : false;
+    console.log(req,session.user);
+
+    console.log(`On ${req.path}, is a user logged in? ${isLoggedIn}`);
+
+    // We call the next function
+    next();
+    // no need to pass it anything
+    // express handles that!
+});
+
+
 // User.add('jimmy hendrix', 'jim', 'guitar')
 //     .then(console.log)
 
@@ -122,7 +150,21 @@ app.post('/register' , (req, res) => {
         });
 
 });
-app.get('/welcome' , (req, res) => {
+
+// For Each Page
+// - determine the route
+// - decide if you need to protect it
+// - grab any data you need out of database
+// - create and use view functions(passing them data from db if needed)
+app.get(`/dashboard`, protectRoute, (req, res) => {
+    const theUser = User.from(req.session.user);
+    theUser.getTodos()
+        .then(allTodos => {
+            res.send(page(todoList(allTodos)));
+        })
+});
+
+app.get('/welcome' , protectRoute, (req, res) => {
     // send them the welcom page
     console.log(req.session.user);
     let visitorName = `Person visiting`;
