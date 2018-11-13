@@ -56,6 +56,11 @@ class User {
         })
     }
 
+    passwordDoesMatch(thePassword) {
+        const didMatch = bcrypt.compareSync(thePassword, this.pwhash);
+        return didMatch;
+    }
+
     static searchByName(name) {
         return db.any(`
             select * from users 

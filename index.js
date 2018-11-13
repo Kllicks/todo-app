@@ -4,6 +4,17 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser')
 
+const session = require('express-session');
+const pgSession = require('connect-pg-simple')(session);
+const db = require('./models/db');
+app.use(session({
+    store: new pgSession({
+        pgPromise: db
+    }),
+    secret: 'abc123',
+    saveUninitialized: false
+}));
+
 app.use(express.static(`public`));
 
 // Configure body-parser to read data sent by HTML form tags
@@ -12,9 +23,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // Configure body-parser to read JSON bodies
 app.use(bodyParser.json());
 
+
 const Todo = require('./models/Todo');
 const User = require('./models/User');
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
 
 const page = require(`./views/page`);
 const userList = require(`./views/userList`);
@@ -105,7 +117,8 @@ app.post('/register' , (req, res) => {
 });
 app.get('/welcome' , (req, res) => {
     // send them the welcom page
-    res.send(page('<h1>Hey punk</h1>'));
+    console.log(req.session.user);
+    res.send(page(`<h1>Hey ${req.session.user.username} </h1>`));
 });
 
 // User login
@@ -131,15 +144,21 @@ app.post('/login', (req, res) => {
             res.redirect('/login');
         })
         .then(theUser => {
-            console.log(theUser);
-            const didMatch = bcrypt.compareSync(thePassword, theUser.pwhash);
-            if (didMatch) {
+            // const didMatch = bcrypt.compareSync(thePassword, theUser.pwhash);
+            if (theUser.passwordDoesMatch(thePassword)) {
+                req.session.user = theUser;
                 res.redirect('/welcome');
             } else {
                 res.redirect('/login');
             }
         })
-    });
+    // 3. If I find a. user
+    // then, check to see if
+    // the password matches
+
+    // 4. 
+
+});
 
 app.get('/users/:id([0-9]+)', (req, res) => {
     User.getById(req.params.id)
