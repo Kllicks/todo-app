@@ -111,6 +111,7 @@ app.post('/register' , (req, res) => {
     User.add(newName, newUsername, newPassword)
         .then(newUser => {
             // 3. If that works, redirect to the welcome page
+            req.session.user = newUser;
             res.redirect('/welcome');
         });
 
@@ -159,6 +160,16 @@ app.post('/login', (req, res) => {
     // 4. 
 
 });
+
+// Logout
+// ------
+app.post(`/logout`, (req, res) => {
+    // kill the session
+    req.session.destroy();
+    // redirect them to homepage
+    res.redirect(`/`);
+
+})
 
 app.get('/users/:id([0-9]+)', (req, res) => {
     User.getById(req.params.id)

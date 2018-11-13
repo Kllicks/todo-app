@@ -16,6 +16,11 @@ function page(content) {
     </head>
     <body>
         ${header()}
+        <div>
+            <form action="/logout" method="POST">
+                <input type="submit" value="logout">
+            </form>
+        </div>
         <div class="main">
             ${content}
         </div>
