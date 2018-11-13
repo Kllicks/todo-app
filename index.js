@@ -119,7 +119,7 @@ app.post('/register' , (req, res) => {
 app.get('/welcome' , (req, res) => {
     // send them the welcom page
     console.log(req.session.user);
-    const visitorName = `Person visiting`;
+    let visitorName = `Person visiting`;
     if (req.session.user){
         visitorName = req.session.user.username;
     }
