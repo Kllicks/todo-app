@@ -1,11 +1,6 @@
-function loginForm() {
+function loginForm(aUser) {
     return `
     <form action="/login" method="POST">
-        <label>
-            Your name:
-            <input type="text" name="name">
-        </label>
-        <br>
         <label>
             Username:
             <input type="text" name="username">

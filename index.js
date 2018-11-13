@@ -14,6 +14,7 @@ app.use(bodyParser.json());
 
 const Todo = require('./models/Todo');
 const User = require('./models/User');
+const bcrypt = require('bcrypt');
 
 const page = require(`./views/page`);
 const userList = require(`./views/userList`);
@@ -109,13 +110,36 @@ app.get('/welcome' , (req, res) => {
 
 // User login
 // ----------
-app.get('/login' , (req, res) => {
-    res.send(page(loginForm()));
+app.get('/login', (req, res) => {
+    // Send them the login form
+    const theForm = loginForm();
+    const thePage = page(theForm);
+    res.send(thePage);
 });
 
 app.post('/login', (req, res) => {
-    
-});
+    // Process the login form
+    // 1. Grab values from form
+    const theUsername = req.body.username;
+    const thePassword = req.body.password;
+
+    // 2. Find a user whose name
+    // matches `theUsername`
+    User.getByUsername(theUsername)
+        .catch(err => {
+            console.log(err);
+            res.redirect('/login');
+        })
+        .then(theUser => {
+            console.log(theUser);
+            const didMatch = bcrypt.compareSync(thePassword, theUser.pwhash);
+            if (didMatch) {
+                res.redirect('/welcome');
+            } else {
+                res.redirect('/login');
+            }
+        })
+    });
 
 app.get('/users/:id([0-9]+)', (req, res) => {
     User.getById(req.params.id)
