@@ -12,7 +12,10 @@ app.use(session({
         pgPromise: db
     }),
     secret: 'abc123',
-    saveUninitialized: false
+    saveUninitialized: false,
+    cookie: {
+        maxAge: 30 * 24 * 60 * 60 * 1000 
+    }
 }));
 
 app.use(express.static(`public`));

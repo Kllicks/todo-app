@@ -1,4 +1,4 @@
-const {header, footer} = require(`./helper`);
+const {header, footer, logoutButton, loginOrRegister} = require(`./helper`);
 
 
 function page(content) {
@@ -16,11 +16,6 @@ function page(content) {
     </head>
     <body>
         ${header()}
-        <div>
-            <form action="/logout" method="POST">
-                <input type="submit" value="logout">
-            </form>
-        </div>
         <div class="main">
             ${content}
         </div>
