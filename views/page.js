@@ -1,7 +1,12 @@
-const {header, footer, logoutButton, loginOrRegister} = require(`./helper`);
+const {
+    header, 
+    footer, 
+    logoutButton, 
+    loginOrRegister
+} = require(`./helper`);
 
 
-function page(content) {
+function page(content, isLoggedIn=false) {
     return `
     <!DOCTYPE html>
     <html lang="en">
@@ -16,6 +21,9 @@ function page(content) {
     </head>
     <body>
         ${header()}
+        ${
+            isLoggedIn ? logoutButton() : loginOrRegister()
+        }
         <div class="main">
             ${content}
         </div>
