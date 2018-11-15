@@ -1,12 +1,18 @@
+//dotenv that doesn't show up
 require('dotenv').config();
 
+//express
 const express = require('express');
 const app = express();
+//body parser
 const bodyParser = require('body-parser')
-
+//express session
 const session = require('express-session');
+//pg simple
 const pgSession = require('connect-pg-simple')(session);
+// database connection
 const db = require('./models/db');
+//session connection
 app.use(session({
     store: new pgSession({
         pgPromise: db
@@ -26,11 +32,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // Configure body-parser to read JSON bodies
 app.use(bodyParser.json());
 
-
+//model imports
 const Todo = require('./models/Todo');
 const User = require('./models/User');
 // const bcrypt = require('bcrypt');
 
+// views imports
 const page = require(`./views/page`);
 const userList = require(`./views/userList`);
 const todoList = require(`./views/todoList`);
