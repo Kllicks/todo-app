@@ -228,7 +228,7 @@ app.post(`/logout`, (req, res) => {
     // redirect them to homepage
     res.redirect(`/`);
 
-})
+});
 
 app.get('/users/:id([0-9]+)', (req, res) => {
     User.getById(req.params.id)
